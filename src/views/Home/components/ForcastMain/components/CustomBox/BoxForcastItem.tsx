@@ -1,4 +1,4 @@
-import { getConfigIconWeather, getIconWeather } from '@/src/constants';
+import { getConfigIconWeather, getIconWeather } from '@/constants';
 import { Stack, Typography } from '@mui/material';
 export interface BoxForcastItemProps {
     code: number;

@@ -1,4 +1,4 @@
-import { LocationIcon, MoonIcon, SunIcon } from '@/src/assets/Icons';
+import { LocationIcon, MoonIcon, SunIcon } from '@/assets/Icons';
 
 import { MoreVert } from '@mui/icons-material';
 import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material';

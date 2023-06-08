@@ -1,5 +1,5 @@
-import astroApi from '@/src/api/astroApi';
-import { InputField } from '@/src/components/FormControls';
+import astroApi from '@/api/astroApi';
+import { InputField } from '@/components/FormControls';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddCircleOutline } from '@mui/icons-material';
 import {

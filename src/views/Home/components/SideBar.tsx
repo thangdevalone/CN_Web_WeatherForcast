@@ -4,8 +4,8 @@ import classes from './styles.module.css';
 import { InputSeachLocation } from './InputSearchLocation';
 
 import { CurrentCard } from './CurrentCard';
-import { CardWeather, InforStorage } from '@/src/models';
-import { NotiIcon } from '@/src/assets/Icons';
+import { CardWeather, InforStorage } from '@/models';
+import { NotiIcon } from '@/assets/Icons';
 const CustomAvatarBase = styled(Avatar)`
     & {
         border-radius: 12px;

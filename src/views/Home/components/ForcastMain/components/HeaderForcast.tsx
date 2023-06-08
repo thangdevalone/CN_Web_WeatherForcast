@@ -1,7 +1,7 @@
 
-import { MoonIcon, SunCloudIcon, SunIcon } from '@/src/assets/Icons';
-import { InforStorage } from '@/src/models';
-import { SwitchLightDark } from '@/src/utils/SwitchLightDark';
+import { MoonIcon, SunCloudIcon, SunIcon } from '@/assets/Icons';
+import { InforStorage } from '@/models';
+import { SwitchLightDark } from '@/utils/SwitchLightDark';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';

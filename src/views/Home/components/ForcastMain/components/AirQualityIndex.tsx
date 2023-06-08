@@ -1,8 +1,8 @@
-import { AirQualityData } from '@/src/models';
+import { AirQualityData } from '@/models';
 import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import classes from './styles.module.css';
-import { LocationIcon, WindIcon } from '@/src/assets/Icons';
-import { generateAdvice } from '@/src/constants';
+import { LocationIcon, WindIcon } from '@/assets/Icons';
+import { generateAdvice } from '@/constants';
 import { AirBox } from './CustomBox/AirBox';
 import { blue, green, orange, red } from '@mui/material/colors';
 

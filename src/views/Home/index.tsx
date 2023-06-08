@@ -4,8 +4,8 @@ import { Box, Stack } from '@mui/material';
 import { ForcastMain } from './components/ForcastMain';
 import { SideBar } from './components/SideBar';
 import { useEffect, useState } from 'react';
-import forcastApi from '@/src/api/forcastApi';
-import { CardWeather } from '@/src/models';
+import forcastApi from '@/api/forcastApi';
+import { CardWeather } from '@/models';
 
 export function Home() {
     const stored = localStorage.getItem('weather_app_infor');
