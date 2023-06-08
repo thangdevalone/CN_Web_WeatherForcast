@@ -1,6 +1,6 @@
 :root {
 
-  font-family: 'Lato','Roboto', sans-serif;
+  font-family: 'Lato','Roboto','Arimo', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -18,9 +18,15 @@
 
   --bg-light:#F0F5FF;
   --bg-ele:#FEFDFF;
-  --bg-ele-blue:#92B5FF;
+  --bg-ele-blue:#83ACFF;
   --bg-ele-pink:#FE74A7;
   --bg-ele-yellow:#FFB55E;
+  --bg-search:#f0f4ff;
+  --bg-box-layout:white;
+  --text-1:#6291F8;
+  --bg-item-selected:#FE8BB4;
+  --text-0:#3F4864;
+  --text-drop:#c0c0c0;
 }
 
 a {

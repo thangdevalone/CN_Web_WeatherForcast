@@ -1,26 +1,36 @@
-import { NewUser } from '@/components/NewUser';
-import { Home } from '@/views/Home';
+import { NewUser } from '@/views/NewUser';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { DashBoardRouter } from './DashboardRouter';
+import { NavBar } from '@/utils/NavBar';
 
 export function Routers() {
-  const stored = localStorage.getItem('weather_app_infor');
-  const parsed = stored ? JSON.parse(stored) : null;
-  const navigate = useNavigate();
-  const location = useLocation();
+    const navigate = useNavigate();
+    const stored = localStorage.getItem('weather_app_infor');
+    const parsed = stored ? JSON.parse(stored) : null;
+    const location = useLocation();
+    useEffect(() => {
+        if (!parsed) {
+            navigate('/infor');
+        } else if (location.pathname !== '/home') {
+            navigate('/home');
+        }
+    }, [location.pathname, navigate, parsed]);
 
-  useEffect(() => {
-    if (!parsed && location.pathname !== '/infor') {
-      navigate('/infor', { replace: true });
-    } else if (parsed && location.pathname !== '/home') {
-      navigate('/home', { replace: true });
-    }
-  }, [parsed, navigate, location.pathname]);
-
-  return (
-    <Routes>
-      <Route path="/infor" element={<NewUser />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            {parsed && (
+                <Route
+                    path="/*"
+                    element={
+                        <>
+                            <NavBar />
+                            <DashBoardRouter />
+                        </>
+                    }
+                />
+            )}
+            <Route path="/infor" element={<NewUser />} />
+        </Routes>
+    );
 }

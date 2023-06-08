@@ -1,17 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { ChangeEvent, useRef, useState } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import * as yup from 'yup';
-
 import uploadApi from '@/api/uploadApi';
 import { InforForm, InforStorage } from '@/models';
 import LinearIndeterminate from '@/utils/LinearIndeterminate';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { AddPhotoAlternate } from '@mui/icons-material';
+import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { ChangeEvent, useRef, useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { InputField } from './FormControls';
-import { UploadImageField } from './FormControls/UploadImageField';
+import * as yup from 'yup';
+import { InputField } from '../components/FormControls';
+import { UploadImageField } from '../components/FormControls/UploadImageField';
 export function NewUser() {
     const imageUploadRef = useRef<HTMLInputElement>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -22,8 +21,9 @@ export function NewUser() {
     const schema = yup.object().shape({
         name: yup.string().required('Vui lòng nhập tên'),
         avatar: yup.mixed().required('Cần tải lên ảnh đại diện'),
+        location:yup.string().required('Cần nhập vị trí của bạn')
     });
-    const [open, setOpen] = useState(true);
+
 
     const form = useForm<InforForm>({
         resolver: yupResolver(schema),
@@ -47,13 +47,15 @@ export function NewUser() {
         }
     };
     const onSubmit: SubmitHandler<InforForm> = async (data) => {
-        const { name, avatar } = data;
+        const { name, avatar,location } = data;
         try {
             setLoading(true);
             const { data } = await uploadApi.postImg(avatar);
             console.log(data);
-            const infor: InforStorage = { name: name, avatar: data.data.url };
+            const infor: InforStorage = { name: name, avatar: data.data.url,location:location };
             localStorage.setItem('weather_app_infor', JSON.stringify(infor));
+            localStorage.setItem('weather_app', JSON.stringify({mode:'light',location:''}));
+
             setLoading(false);
             navigator('/home', {replace:true})
         } catch (error) {
@@ -64,12 +66,12 @@ export function NewUser() {
 
     return (
         <>
-            <Dialog open={open}>
+            <Dialog open={true}>
                 {loadding && <LinearIndeterminate />}
 
                 <DialogTitle id="alert-dialog-title">Nhập thông tin</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText sx={{marginBottom:"16px"}}>
                         Chúng tôi cần thu thập thông tin bạn để tăng trải nghiệm người dùng, từ đó
                         đem tới trải nhiệm tốt nhất cho bạn
                     </DialogContentText>
@@ -77,6 +79,9 @@ export function NewUser() {
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                             <Box>
                                 <InputField label="Nhập tên của bạn" name="name" />
+                            </Box>
+                            <Box>
+                                <InputField label="Nhập vị trí bạn muốn dự báo" name="location" />
                             </Box>
                             <Button
                                 onClick={handleClickUpload}

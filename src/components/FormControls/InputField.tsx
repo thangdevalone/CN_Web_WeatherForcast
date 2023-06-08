@@ -15,7 +15,7 @@ export function InputField(props: InputFieldProps) {
         formState: { errors },
     } = form;
     return (
-        <FormControl error={!!errors[name]} fullWidth margin="normal" variant="outlined">
+        <FormControl error={!!errors[name]} fullWidth sx={{marginBottom:"8px"}} variant="outlined">
             <InputLabel htmlFor={name}>{label}</InputLabel>
             <Controller
                 name={name}

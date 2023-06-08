@@ -1,0 +1,6 @@
+.boxLayOut{
+    background-color: var(--bg-box-layout);
+    border-radius: 15px;
+    padding:15px;
+    box-sizing: border-box;
+}
