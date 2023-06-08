@@ -2,11 +2,10 @@ import { Box } from '@mui/material';
 import './App.css';
 
 import { useEffect } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { NavBar } from './utils/NavBar';
-import { DashBoardRouter } from './Routers';
+import { Home } from './views/Home';
 import { NewUser } from './views/NewUser';
-
 
 function App() {
     const navigate = useNavigate();
@@ -24,19 +23,25 @@ function App() {
     return (
         <Box sx={{ position: 'relative' }}>
             <Routes>
-            {parsed && (
-                <Route
-                    path="/*"
-                    element={
-                        <>
-                            <NavBar />
-                            <DashBoardRouter />
-                        </>
-                    }
-                />
-            )}
-            <Route path="/infor" element={<NewUser />} />
-        </Routes>
+                {parsed && (
+                    <Route
+                        path="/*"
+                        element={
+                            <>
+                                <NavBar />
+                                <Routes>
+                                    <Route
+                                        path="/"
+                                        element={<Navigate to="/home" replace={true} />}
+                                    />
+                                    <Route path="/home" element={<Home />} />
+                                </Routes>
+                            </>
+                        }
+                    />
+                )}
+                <Route path="/infor" element={<NewUser />} />
+            </Routes>
         </Box>
     );
 }
