@@ -4,7 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { DashBoardRouter } from './DashboardRouter';
 import { NavBar } from '@/utils/NavBar';
 
-export function Routers() {
+export function MainRouter() {
     const navigate = useNavigate();
     const stored = localStorage.getItem('weather_app_infor');
     const parsed = stored ? JSON.parse(stored) : null;
