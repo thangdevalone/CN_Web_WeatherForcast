@@ -1,4 +1,5 @@
-import { AirQualityData } from "@/models";
+import { AirQualityData } from "../models";
+
 
 export function normLocation(location: string) {
     return location.normalize('NFD').replace(/[\u0300-\u036f]/g, '');

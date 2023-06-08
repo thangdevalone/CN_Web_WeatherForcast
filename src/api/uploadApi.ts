@@ -1,5 +1,6 @@
-import { IMGBB_HOST, IMGBB_KEY } from '@/constants';
+
 import axios from 'axios';
+import { IMGBB_HOST, IMGBB_KEY } from '../constants';
 
 const uploadApi = {
     postImg(form: File) {

@@ -1,8 +1,8 @@
-import { AirQualityData } from '@/models';
+import { AirQualityData } from '@/src/models';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import classes from './styles.module.css';
-import { LocationIcon, WindIcon } from '@/assets/Icons';
-import { generateAdvice } from '@/constants';
+import { LocationIcon, WindIcon } from '@/src/assets/Icons';
+import { generateAdvice } from '@/src/constants';
 
 export interface AirQualityIndexProps {
     airQualityData: AirQualityData;

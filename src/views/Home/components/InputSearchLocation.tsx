@@ -1,4 +1,4 @@
-import { LocationIcon, SearchIcon } from '@/assets/Icons';
+import { LocationIcon, SearchIcon } from '@/src/assets/Icons';
 
 import { IconButton, InputBase, Paper, styled } from '@mui/material';
 import { useState, ChangeEvent, KeyboardEvent } from 'react';

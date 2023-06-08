@@ -1,11 +1,11 @@
-import { HumIcon, LocationIcon, WindIcon } from '@/assets/Icons';
 
-import { getConfigIconWeather, getIconWeather } from '@/constants';
-import { CardWeather } from '@/models';
 import { Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { BoxDivider } from './BoxDivider';
 import classes from './styles.module.css';
+import { getConfigIconWeather, getIconWeather } from '@/src/constants';
+import { HumIcon, LocationIcon, WindIcon } from '@/src/assets/Icons';
+import { CardWeather } from '@/src/models';
 export interface CurrentCardProps {
     currentCard: CardWeather;
 }

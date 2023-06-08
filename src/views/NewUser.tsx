@@ -1,6 +1,4 @@
-import uploadApi from '@/api/uploadApi';
-import { InforForm, InforStorage } from '@/models';
-import LinearIndeterminate from '@/utils/LinearIndeterminate';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddPhotoAlternate } from '@mui/icons-material';
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
@@ -11,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { InputField } from '../components/FormControls';
 import { UploadImageField } from '../components/FormControls/UploadImageField';
+import { InforForm, InforStorage } from '../models';
+import LinearIndeterminate from '../utils/LinearIndeterminate';
+import uploadApi from '../api/uploadApi';
 export function NewUser() {
     const imageUploadRef = useRef<HTMLInputElement>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);

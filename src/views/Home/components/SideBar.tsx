@@ -1,10 +1,11 @@
-import { CardWeather, InforStorage } from '@/models';
 import { Avatar, Box, IconButton, Stack, styled } from '@mui/material';
 
 import classes from './styles.module.css';
 import { InputSeachLocation } from './InputSearchLocation';
-import { NotiIcon } from '@/assets/Icons';
+
 import { CurrentCard } from './CurrentCard';
+import { CardWeather, InforStorage } from '@/src/models';
+import { NotiIcon } from '@/src/assets/Icons';
 const CustomAvatarBase = styled(Avatar)`
     & {
         border-radius: 12px;

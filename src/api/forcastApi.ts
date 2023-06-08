@@ -1,5 +1,6 @@
 
-import { API_KEY, normLocation } from "@/constants";
+
+import { API_KEY, normLocation } from "../constants";
 import axiosClient from "./axiosClient"
 
 

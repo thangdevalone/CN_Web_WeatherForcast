@@ -1,8 +1,10 @@
-import { NewUser } from '@/views/NewUser';
+
 import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+
 import { DashBoardRouter } from './DashboardRouter';
-import { NavBar } from '@/utils/NavBar';
+import { NavBar } from '../utils/NavBar';
+import { NewUser } from '../views/NewUser';
 
 export function MainRouter() {
     const navigate = useNavigate();
