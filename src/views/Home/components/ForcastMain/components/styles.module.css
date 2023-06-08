@@ -1,6 +1,32 @@
-.boxLayOut{
+.boxLayOut {
     background-color: var(--bg-box-layout);
     border-radius: 15px;
-    padding:15px;
+    padding: 15px;
     box-sizing: border-box;
+}
+.subAir {
+    font-size: 10px;
+}
+.boxScrollX::-webkit-scrollbar {
+    height: 10px;
+    border-radius: 10px;
+}
+
+/* Track */
+.boxScrollX::-webkit-scrollbar-track {
+    background: #e3e2e2;
+    border-radius: 10px;
+
+}
+
+/* Handle */
+.boxScrollX::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+
+}
+
+/* Handle on hover */
+.boxScrollX::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

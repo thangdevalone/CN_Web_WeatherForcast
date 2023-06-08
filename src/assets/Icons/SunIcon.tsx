@@ -2,19 +2,15 @@ import { SvgIcon } from '@mui/material';
 
 export interface SunIconProps {
     color: string;
-    fontSize?: 'inherit'  | 'small' | 'large' | 'medium';
+    fontSize?: 'inherit' | 'small' | 'large' | 'medium';
+    sx?: object;
 }
 
 export function SunIcon(props: SunIconProps) {
-    const { color,fontSize='medium' } = props;
+    const { color, fontSize = 'medium',sx } = props;
     return (
-        <SvgIcon fontSize={fontSize}>
-            <svg
-            
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+        <SvgIcon  sx={{...sx}} fontSize={fontSize}>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 8.41015 15.5899 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5Z"
                     stroke={color}

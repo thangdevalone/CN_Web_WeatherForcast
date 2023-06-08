@@ -14,6 +14,7 @@ export function CurrentCard(props: CurrentCardProps) {
     const stored = localStorage.getItem('weather_app_infor');
     const parsed = stored ? JSON.parse(stored) : null;
     const icon=getIconWeather(currentCard.condition.code)
+
     return (
         <Stack
             flexDirection="column"
@@ -56,7 +57,7 @@ export function CurrentCard(props: CurrentCardProps) {
                     fontWeight: '500',
                 }}
             >
-                Today, {dayjs(currentCard.date).format('DD MMMM')}
+                {`${dayjs(currentCard.date).format('MM/DD/YYYY')===dayjs(new Date()).format('MM/DD/YYYY')?'Today':dayjs(currentCard.date).format('dddd')}`}, {dayjs(currentCard.date).format('DD MMMM')}
             </Typography>
             <Typography
                 sx={{

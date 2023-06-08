@@ -44,7 +44,7 @@ export function HeaderForcast() {
                     {currentTime.format('dddd, DD MMMM, YYYY')}
                 </Typography>
                 <Stack sx={{ marginTop: '10px' }} alignItems="center" flexDirection="row">
-                    {currentTime.hour() < 12 && currentTime.hour() > 0 && (
+                    {currentTime.hour() < 12 && currentTime.hour() >= 0 && (
                         <SunCloudIcon color={theme.palette.csBlue.main} fontSize="large" />
                     )}
                     {currentTime.hour() >= 12 && currentTime.hour() < 18 && (
@@ -63,14 +63,14 @@ export function HeaderForcast() {
                         }}
                     >
                         {currentTime.hour() < 12 &&
-                            currentTime.hour() > 0 &&
-                            `Good Morning, ${user.name}!`}
+                            currentTime.hour() >= 0 &&
+                            `Good morning, ${user.name}!`}
                         {currentTime.hour() >= 12 &&
                             currentTime.hour() < 18 &&
-                            `Good Afternoon, ${user.name}!`}
+                            `Good afternoon, ${user.name}!`}
                         {currentTime.hour() >= 18 &&
                             currentTime.hour() <= 23 &&
-                            `Good Night, ${user.name}!`}
+                            `Good night, ${user.name}!`}
                     </Typography>
                 </Stack>
             </Box>

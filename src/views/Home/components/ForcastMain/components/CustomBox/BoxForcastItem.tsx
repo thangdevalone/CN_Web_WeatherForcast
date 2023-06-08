@@ -16,7 +16,7 @@ export function BoxForcastItem(props: BoxForcastItemProps){
             onClick={onClick}
             sx={{
                 width: '100%',
-                padding: '10px',
+                padding: '10px 5px',
                 backgroundColor: `${active ? 'var(--bg-ele-blue)' : 'white'}`,
                 borderRadius:"20px",
                 boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
@@ -29,7 +29,7 @@ export function BoxForcastItem(props: BoxForcastItemProps){
             <img
                 src={`/assets/${getIconWeather(code)}`}
                 alt=""
-                style={{ ...getConfigIconWeather(code),width:"80%" }}
+                style={{ ...getConfigIconWeather(code),width:"70%" }}
                 
             />
             <Stack direction="column" alignItems="center">

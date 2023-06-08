@@ -2,10 +2,10 @@
 import { Box, Stack } from '@mui/material';
 import classes from '../styles.module.css';
 import { HeaderForcast } from './components/HeaderForcast';
-import { BoxForcastItem } from './components/BoxForcastItem';
+import { BoxForcastItem } from './components/CustomBox/BoxForcastItem';
 import dayjs from 'dayjs';
-import { CardWeather } from '@/models';
-import { AirQualityIndex } from './components/AriQualityIndex';
+import { CardWeather } from '@/src/models';
+import { AirQualityIndex } from './components/AirQualityIndex';
 import { AstroIndex } from './components/AstroIndex';
 export interface ForcastMainProps {
     forecast: any;
