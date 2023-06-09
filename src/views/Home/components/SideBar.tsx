@@ -6,6 +6,10 @@ import { InputSeachLocation } from './InputSearchLocation';
 import { CurrentCard } from './CurrentCard';
 import { CardWeather, InforStorage } from '@/models';
 import { NotiIcon } from '@/assets/Icons';
+import { useSnackbar } from 'notistack';
+import forcastApi from '@/api/forcastApi';
+import { CircularIndeterminate } from '@/utils/CircularIndeterminate';
+import { useState } from 'react';
 const CustomAvatarBase = styled(Avatar)`
     & {
         border-radius: 12px;
@@ -22,19 +26,35 @@ const CustomAvatarBase = styled(Avatar)`
     }
 `;
 
-
 export interface SideBarProps {
     currentCard: CardWeather;
+    setValue: (newValue: InforStorage) => void;
 }
-export function SideBar(props:SideBarProps) {
-    const {currentCard}=props
+export function SideBar(props: SideBarProps) {
+    const { currentCard, setValue } = props;
     const localStorageItem = localStorage.getItem('weather_app_infor');
     const user: InforStorage = localStorageItem ? JSON.parse(localStorageItem) : null;
-    const handleValue = (value: string) => {
+    const { enqueueSnackbar } = useSnackbar();
+    const [loadding, setLoading] = useState(false);
+    const handleValue = async (value: string) => {
         console.log(value);
+        try {
+            setLoading(true);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+            const res: any = await forcastApi.getForcast(value, 7);
+            const newValue: InforStorage = { ...user, location: res.location.name };
+            localStorage.setItem('weather_app_infor', JSON.stringify(newValue));
+            setValue(newValue);
+            setLoading(false);
+            enqueueSnackbar(`Đã chuyển vị trí thành ${res.location.name}`, { variant: 'success' });
+        } catch (error) {
+            console.log(error);
+            enqueueSnackbar('Vị trí muốn tìm ko hợp lệ hoặc không có sẵn', { variant: 'error' });
+        }
     };
     return (
         <Box className={classes.sideBar}>
+            {loadding && <CircularIndeterminate />}
             <Stack
                 className="header"
                 alignItems="center"
@@ -53,7 +73,7 @@ export function SideBar(props:SideBarProps) {
                     >
                         <NotiIcon color="lightBlue" />
                     </IconButton>
-                    <CustomAvatarBase src={user.avatar}  />
+                    <CustomAvatarBase src={user.avatar} />
                 </Stack>
             </Stack>
             <CurrentCard currentCard={currentCard} />

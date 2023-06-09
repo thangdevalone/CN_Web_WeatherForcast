@@ -1,5 +1,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import {v4 as uuidv4} from 'uuid';
 import { AddPhotoAlternate } from '@mui/icons-material';
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -55,7 +56,7 @@ export function NewUser() {
             console.log(data);
             const infor: InforStorage = { name: name, avatar: data.data.url,location:location };
             localStorage.setItem('weather_app_infor', JSON.stringify(infor));
-            localStorage.setItem('weather_app', JSON.stringify({mode:'light',astro:[location]}));
+            localStorage.setItem('weather_app', JSON.stringify({mode:'light',astro:[{id:uuidv4(),location:location}]}));
 
             setLoading(false);
             navigator('/home', {replace:true})

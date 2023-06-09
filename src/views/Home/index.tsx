@@ -5,13 +5,12 @@ import { ForcastMain } from './components/ForcastMain';
 import { SideBar } from './components/SideBar';
 import { useEffect, useState } from 'react';
 import forcastApi from '@/api/forcastApi';
-import { CardWeather } from '@/models';
+import { CardWeather, InforStorage } from '@/models';
 
 export function Home() {
     const stored = localStorage.getItem('weather_app_infor');
-    const parsed = stored ? JSON.parse(stored) : null;
+    const [parsed,setParsed] = useState<InforStorage>(stored && JSON.parse(stored) );
     const [currentCard, setCurrentCard] = useState<CardWeather | null>(null);
-
     const [foreCastDay, setForecastDay] = useState<any>(null);
     const [activeCard, setActiveCard] = useState<number>(0);
     useEffect(() => {
@@ -19,13 +18,14 @@ export function Home() {
             try {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
                 const res: any = await forcastApi.getForcast(parsed.location, 7);
-
+                localStorage.setItem('weather_app_infor',JSON.stringify({...parsed,location:res.location.name}))
                 setForecastDay(res.forecast.forecastday);
                 setCurrentCard({...res.forecast.forecastday[0].day,date:res.forecast.forecastday[0].date});
             } catch (error) {
                 console.log(error);
             }
         })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parsed.location]);
 
     return (
@@ -34,7 +34,7 @@ export function Home() {
                 <>
                     <Stack className="full-box" flexDirection="row">
                         <ForcastMain forecast={foreCastDay} active={activeCard} setActiveCard={setActiveCard} setCurrentCard={setCurrentCard} />
-                        <SideBar currentCard={currentCard} />
+                        <SideBar currentCard={currentCard} setValue={setParsed} />
                     </Stack>
                 </>
             )}

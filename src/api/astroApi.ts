@@ -6,7 +6,7 @@ import axiosClient from "./axiosClient"
 
 const astroApi = {
     getAstro(locate:string){
-        const url = `/astronomy.json.json?key=${API_KEY}&q=${normLocation(locate)}&lang=vi`
+        const url = `/astronomy.json?key=${API_KEY}&q=${normLocation(locate)}&lang=vi`
         return axiosClient.get(url)
     },
    

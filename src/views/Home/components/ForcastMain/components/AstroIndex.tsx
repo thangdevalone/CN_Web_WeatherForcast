@@ -2,23 +2,25 @@ import astroApi from '@/api/astroApi';
 import { InputField } from '@/components/FormControls';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddCircleOutline } from '@mui/icons-material';
+import {v4 as uuidv4} from 'uuid'
 import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  Stack,
-  Typography,
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    IconButton,
+    Stack,
+    Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { SunBox } from './CustomBox/SunBox';
 import classes from './styles.module.css';
+import LinearIndeterminate from '@/utils/LinearIndeterminate';
 interface astroDataModel {
     location: {
         country: string;
@@ -31,14 +33,19 @@ interface astroDataModel {
         };
     };
 }
+export interface astroLocal{
+    location:string,
+    id:string
+}
 interface formAddLocation {
     location: string;
 }
 export function AstroIndex() {
     const stored = localStorage.getItem('weather_app');
     const parsed = stored ? JSON.parse(stored) : null;
-    const [astro, setAstro] = useState([...parsed.astro]);
+    const [astro, setAstro] = useState<astroLocal[]>([...parsed.astro]);
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const schema = yup.object().shape({
         location: yup.string().required('Cần nhập tên thành phố'),
     });
@@ -50,10 +57,13 @@ export function AstroIndex() {
     useEffect(() => {
         (async () => {
             try {
-                const apiRequests = astro.map((item: string) => astroApi.getAstro(item));
+                setLoading(true);
+                const apiRequests = astro.map((item: astroLocal) => astroApi.getAstro(item.location));
                 const res = await Promise.all(apiRequests);
                 const resConvert = res.map((response) => response as unknown as astroDataModel);
                 setAstroData(resConvert);
+                setOpen(false);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -65,12 +75,14 @@ export function AstroIndex() {
     };
     const handleAddLocation: SubmitHandler<formAddLocation> = (value) => {
         console.log(value);
-        const newAstro=[...astro,value.location]
-        setAstro(newAstro)
+        const newAstro = [...astro, {location:value.location,id:uuidv4()}];
+        localStorage.setItem('weather_app',JSON.stringify({...parsed,astro:newAstro}))
+        setAstro(newAstro);
     };
     return (
         <>
             <Dialog open={open} onClose={handleClose}>
+                {loading && <LinearIndeterminate />}
                 <FormProvider {...form}>
                     <form onSubmit={form.handleSubmit(handleAddLocation)}>
                         <DialogTitle>Thêm dữ liệu thiên văn</DialogTitle>
@@ -89,6 +101,7 @@ export function AstroIndex() {
                                     },
                                 }}
                                 onClick={handleClose}
+                                disabled={loading}
                             >
                                 Hủy
                             </Button>
@@ -99,6 +112,8 @@ export function AstroIndex() {
                                     },
                                 }}
                                 type="submit"
+                                disabled={loading}
+
                             >
                                 Thêm mới
                             </Button>
@@ -106,7 +121,10 @@ export function AstroIndex() {
                     </form>
                 </FormProvider>
             </Dialog>
-            <Box className={classes.boxLayOut} sx={{ width: '50%' ,boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px"}}>
+            <Box
+                className={classes.boxLayOut}
+                sx={{ width: '50%', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px' }}
+            >
                 <Stack
                     sx={{ mb: '10px' }}
                     direction="row"
@@ -143,6 +161,8 @@ export function AstroIndex() {
                                     sunRise={item.astronomy.astro.sunrise}
                                     sunSet={item.astronomy.astro.sunset}
                                     location={`${item.location.name}, ${item.location.country}`}
+                                    id={astro[index]?.id||""}
+                                    setAstro={setAstro}
                                 />
                             );
                         })}
