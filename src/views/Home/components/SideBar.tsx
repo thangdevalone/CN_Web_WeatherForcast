@@ -37,7 +37,6 @@ export function SideBar(props: SideBarProps) {
     const { enqueueSnackbar } = useSnackbar();
     const [loadding, setLoading] = useState(false);
     const handleValue = async (value: string) => {
-        console.log(value);
         try {
             setLoading(true);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
@@ -53,7 +52,7 @@ export function SideBar(props: SideBarProps) {
         }
     };
     return (
-        <Box className={classes.sideBar}>
+        <Box className={classes.sideBar} sx={{backgroundColor:'var(--bg-side-bar)'}}>
             {loadding && <CircularIndeterminate />}
             <Stack
                 className="header"

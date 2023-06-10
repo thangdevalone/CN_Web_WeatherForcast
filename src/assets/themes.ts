@@ -22,6 +22,7 @@ import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
     palette: {
+        
         lightBlue: {
             main: '#A3C2FF',
         },

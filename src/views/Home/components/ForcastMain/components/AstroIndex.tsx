@@ -123,7 +123,7 @@ export function AstroIndex() {
             </Dialog>
             <Box
                 className={classes.boxLayOut}
-                sx={{ width: '50%', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px' }}
+                sx={{ width: '50%', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px' ,backgroundColor:"var(--bg-box)"}}
             >
                 <Stack
                     sx={{ mb: '10px' }}

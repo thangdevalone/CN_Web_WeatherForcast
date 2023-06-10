@@ -1,46 +1,42 @@
 import { Box } from '@mui/material';
 import './App.css';
 
-import { useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { NavBar } from './utils/NavBar';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { ProtectAuth } from './components/ProtectAuth';
+import { ProtectRoute } from './components/ProtectRoute';
+import { Analysis } from './views/Analysis';
+import { Calendar } from './views/Calendar';
 import { Home } from './views/Home';
+import { Location } from './views/Location';
 import { NewUser } from './views/NewUser';
-
+import { Setting } from './views/Setting';
+import { useState, useEffect } from 'react';
 function App() {
-    const navigate = useNavigate();
-    const stored = localStorage.getItem('weather_app_infor');
+    const stored = localStorage.getItem('weather_app');
     const parsed = stored ? JSON.parse(stored) : null;
-    const location = useLocation();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [mode, setMode] = useState<string>(parsed.mode);
     useEffect(() => {
-        if (!parsed) {
-            navigate('/infor');
-        } else if (location.pathname !== '/home') {
-            navigate('/home');
+        if (mode === 'light') {
+            document.body.classList.add('light');
+        } else {
+            document.body.classList.add('dark');
         }
-    }, [location.pathname, navigate, parsed]);
-
+    }, [mode]);
     return (
         <Box sx={{ position: 'relative' }}>
             <Routes>
-                {parsed && (
-                    <Route
-                        path="/*"
-                        element={
-                            <>
-                                <NavBar />
-                                <Routes>
-                                    <Route
-                                        path="/"
-                                        element={<Navigate to="/home" replace={true} />}
-                                    />
-                                    <Route path="/home" element={<Home />} />
-                                </Routes>
-                            </>
-                        }
-                    />
-                )}
-                <Route path="/infor" element={<NewUser />} />
+                <Route path="/" element={<ProtectRoute />}>
+                    <Route path="/" element={<Navigate to="/home" />} />
+                    <Route path="/home" element={<Home setMode={setMode} />} />
+                    <Route path="/location" element={<Location />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/analysis" element={<Analysis />} />
+                    <Route path="/setting" element={<Setting />} />
+                </Route>
+                <Route path="/" element={<ProtectAuth />}>
+                    <Route path="/infor" element={<NewUser />} />
+                </Route>
             </Routes>
         </Box>
     );

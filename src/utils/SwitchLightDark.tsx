@@ -1,5 +1,5 @@
 import { FormControl, Switch, styled, useTheme } from '@mui/material';
-
+import {useState,useEffect} from 'react'
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -23,7 +23,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         },
     },
     '& .MuiSwitch-thumb': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#001e3c' : '#003892',
+        backgroundColor: theme.palette.mode === 'dark' ? '#001e3c' : '#769ff4',
         width: 32,
         height: 32,
         '&:before': {
@@ -46,15 +46,34 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         borderRadius: 20 / 2,
     },
 }));
-export function SwitchLightDark() {
+
+export interface SwitchLightDarkProps{
+    setMode:(newMode:string)=>void
+}
+
+export function SwitchLightDark({setMode}:SwitchLightDarkProps) {
     const theme = useTheme();
     const localStorageApp = localStorage.getItem('weather_app');
     const parsed = localStorageApp && JSON.parse(localStorageApp);
+    const [isDark,setIsDark]=useState<boolean>(parsed.mode == 'light'?false:true)
     const handleChangeMode = () => {
         const newMode = { ...parsed, mode: parsed.mode == 'light' ? 'dark' : 'light' };
         localStorage.setItem('weather_app', JSON.stringify(newMode));
         theme.palette.mode = newMode.mode;
+        setIsDark(newMode.mode == 'light'?false:true)
+        setMode(newMode.mode )
     };
+    useEffect(() => {
+        if (isDark) {
+          document.body.classList.add('dark');
+          document.body.classList.remove('light');
+
+        } else {
+          document.body.classList.remove('dark');
+          document.body.classList.add('light');
+
+        }
+      }, [isDark])
     return (
         <FormControl>
             <MaterialUISwitch

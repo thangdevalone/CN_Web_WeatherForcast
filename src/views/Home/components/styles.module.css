@@ -1,7 +1,8 @@
 .forcastMain{
     flex: 2;
     background-color: var(--bg-light);
-    padding:30px 40px;
+    padding:30px 40px; 
+    position: relative;
 }
 .sideBar{
     flex: 1;

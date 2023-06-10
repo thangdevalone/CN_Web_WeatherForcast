@@ -7,7 +7,11 @@ import { useEffect, useState } from 'react';
 import forcastApi from '@/api/forcastApi';
 import { CardWeather, InforStorage } from '@/models';
 
-export function Home() {
+export interface HomeProps{
+    setMode:(newMode:string)=>void
+}
+
+export function Home({setMode}:HomeProps) {
     const stored = localStorage.getItem('weather_app_infor');
     const [parsed,setParsed] = useState<InforStorage>(stored && JSON.parse(stored) );
     const [currentCard, setCurrentCard] = useState<CardWeather | null>(null);
@@ -33,8 +37,8 @@ export function Home() {
             {currentCard && (
                 <>
                     <Stack className="full-box" flexDirection="row">
-                        <ForcastMain forecast={foreCastDay} active={activeCard} setActiveCard={setActiveCard} setCurrentCard={setCurrentCard} />
-                        <SideBar currentCard={currentCard} setValue={setParsed} />
+                        <ForcastMain setMode={setMode} forecast={foreCastDay} active={activeCard} setActiveCard={setActiveCard} setCurrentCard={setCurrentCard} />
+                        <SideBar  currentCard={currentCard} setValue={setParsed} />
                     </Stack>
                 </>
             )}

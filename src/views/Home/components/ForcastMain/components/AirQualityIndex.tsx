@@ -1,10 +1,11 @@
-import { AirQualityData } from '@/models';
-import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material';
-import classes from './styles.module.css';
 import { LocationIcon, WindIcon } from '@/assets/Icons';
 import { generateAdvice } from '@/constants';
-import { AirBox } from './CustomBox/AirBox';
+import { AirQualityData } from '@/models';
+import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import { blue, green, orange, red } from '@mui/material/colors';
+import { useState, useEffect } from 'react';
+import { AirBox } from './CustomBox/AirBox';
+import classes from './styles.module.css';
 
 export interface AirQualityIndexProps {
     airQualityData: AirQualityData;
@@ -28,7 +29,11 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
         }
         return green[600];
     };
-    const handleBg = () => {
+
+    const handleBg = (mode: string) => {
+        if (mode === 'dark') {
+            return 'var(--bg-side-bar)';
+        }
         if (res.alert === 'Tốt') {
             return blue[50];
         }
@@ -40,9 +45,19 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
         }
         return green[50];
     };
+    const [colorBgAirBox, setColorBgAirBox] = useState<string>(handleBg(theme.palette.mode));
+    useEffect(() => {
+        const stored = localStorage.getItem('weather_app');
+        const app = stored ? JSON.parse(stored) : null;
+        setColorBgAirBox(handleBg(app.mode));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme.palette.mode]);
 
     return (
-        <Box className={classes.boxLayOut} sx={{ border: `1px solid ${handleColor()}` }}>
+        <Box
+            className={classes.boxLayOut}
+            sx={{ border: `1px solid ${handleColor()}`, backgroundColor: 'var(--bg-box)' }}
+        >
             <Stack
                 sx={{ mb: '10px' }}
                 direction="row"
@@ -106,7 +121,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                         >
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}
@@ -119,7 +134,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                             />
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}
@@ -132,7 +147,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                             />
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}
@@ -145,7 +160,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                             />
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}
@@ -158,7 +173,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                             />
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}
@@ -171,7 +186,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                             />
                             <AirBox
                                 sx={{
-                                    backgroundColor: handleBg(),
+                                    backgroundColor: colorBgAirBox,
                                     width: '60px',
                                     border: `1px solid ${handleColor()}`,
                                 }}

@@ -17,9 +17,9 @@ export function BoxForcastItem(props: BoxForcastItemProps){
             sx={{
                 width: '100%',
                 padding: '10px 5px',
-                backgroundColor: `${active ? 'var(--bg-ele-blue)' : 'white'}`,
+                backgroundColor: `${active ? 'var(--bg-ele-blue)' : 'var(--bg-box)'}`,
                 borderRadius:"20px",
-                boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
                 cursor:"pointer"
             }}
             flexDirection="column"

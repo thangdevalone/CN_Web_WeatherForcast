@@ -10,6 +10,10 @@ export interface InputSeachLocationProps {
 export const CustomInputBase = styled(InputBase)`
     & input::placeholder {
         font-style: italic;
+        color:var(--pl-holder)
+    }
+    & input{
+        color:var(--text-df)
     }
 `;
 export function InputSeachLocation(props: InputSeachLocationProps) {
@@ -37,7 +41,7 @@ export function InputSeachLocation(props: InputSeachLocationProps) {
                 alignItems: 'center',
                 width: '60%',
                 background: 'var(--bg-search)',
-                borderRadius: '20px',
+                borderRadius: '12px',
             }}
         >
             <SearchIcon color="lightBlue" />

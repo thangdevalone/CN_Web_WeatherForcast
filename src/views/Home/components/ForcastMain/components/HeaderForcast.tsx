@@ -1,10 +1,10 @@
 
 import { MoonIcon, SunCloudIcon, SunIcon } from '@/assets/Icons';
 import { InforStorage } from '@/models';
-import { SwitchLightDark } from '@/utils/SwitchLightDark';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+
 
 export function HeaderForcast() {
     const localStorageItem = localStorage.getItem('weather_app_infor');
@@ -74,9 +74,7 @@ export function HeaderForcast() {
                     </Typography>
                 </Stack>
             </Box>
-            <Box sx={{ position: 'absolute', top: '0px', right: '20px' }}>
-                <SwitchLightDark />
-            </Box>
+            
         </Box>
     );
 }

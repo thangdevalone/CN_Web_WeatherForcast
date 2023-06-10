@@ -2,7 +2,7 @@ import { LocationIcon, MoonIcon, SunIcon } from '@/assets/Icons';
 
 import { DeleteOutline, MoreVert } from '@mui/icons-material';
 import { Box, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography, useTheme } from '@mui/material';
-import { amber, yellow } from '@mui/material/colors';
+import { amber } from '@mui/material/colors';
 import { ReactNode, useState } from 'react';
 import { astroLocal } from '../AstroIndex';
 
@@ -56,10 +56,10 @@ export function SunBox(props: SunBoxProps) {
         <Box
             sx={{
                 padding: '10px 15px',
-                backgroundColor: `${yellow[50]}`,
+                backgroundColor: "var(--bg-sun-box)",
                 borderRadius: '10px',
                 mb: '10px',
-                border: `1px solid ${amber[500]}`,
+                border: `1px solid var(--bd-sun-box)`,
             }}
         >
             <Stack direction="row" justifyContent="space-between" sx={{ mb: '5px' }}>
