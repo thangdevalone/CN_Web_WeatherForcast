@@ -15,7 +15,7 @@ function App() {
     const stored = localStorage.getItem('weather_app');
     const parsed = stored ? JSON.parse(stored) : null;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [mode, setMode] = useState<string>(parsed.mode);
+    const [mode, setMode] = useState<string>(parsed?.mode||"light");
     useEffect(() => {
         if (mode === 'light') {
             document.body.classList.add('light');
