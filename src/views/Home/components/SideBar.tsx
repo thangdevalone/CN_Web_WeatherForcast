@@ -48,11 +48,13 @@ export function SideBar(props: SideBarProps) {
             enqueueSnackbar(`Đã chuyển vị trí thành ${res.location.name}`, { variant: 'success' });
         } catch (error) {
             console.log(error);
+            setLoading(false);
+
             enqueueSnackbar('Vị trí muốn tìm ko hợp lệ hoặc không có sẵn', { variant: 'error' });
         }
     };
     return (
-        <Box className={classes.sideBar} sx={{backgroundColor:'var(--bg-side-bar)'}}>
+        <Box className={classes.sideBar} sx={{ backgroundColor: 'var(--bg-side-bar)' }}>
             {loadding && <CircularIndeterminate />}
             <Stack
                 className="header"
