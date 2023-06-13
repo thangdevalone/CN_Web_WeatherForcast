@@ -197,7 +197,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                     </Box>
                 </>
             ) : (
-                <Box>Chưa được dự báo</Box>
+                <Box sx={{color:"var(--text-df)"}}>Chưa được dự báo</Box>
             )}
             <span style={{ color: 'var(--text-drop)', fontSize: '12px' }}>
                 Đơn vị đo: μg/m<sup className={classes.subAir}>3</sup>{' '}

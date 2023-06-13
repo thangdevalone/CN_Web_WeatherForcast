@@ -28,6 +28,7 @@ export function NewUser() {
 
 
     const form = useForm<InforForm>({
+        
         resolver: yupResolver(schema),
     });
     const handleClickUpload = () => {

@@ -10,3 +10,10 @@ export interface InforStorage{
     location: string;
 
 }
+
+export interface NoteForm{
+    title:string,
+    desc:string,
+    start:string,
+    end:string
+}

@@ -1,22 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
-import { BrowserRouter } from 'react-router-dom';
-import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.tsx';
 import { theme } from './assets/themes.ts';
+import './index.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <ThemeProvider theme={theme}>
-                <SnackbarProvider
-                    autoHideDuration={3000}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                >
-                    <App />
-                </SnackbarProvider>
-            </ThemeProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <SnackbarProvider
+                autoHideDuration={3000}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+            >
+                <App />
+            </SnackbarProvider>
+        </ThemeProvider>
+    </BrowserRouter>
 );

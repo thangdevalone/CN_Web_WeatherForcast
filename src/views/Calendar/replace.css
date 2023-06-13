@@ -1,0 +1,62 @@
+.main-calendar .fc {
+    height: 100%;
+}
+.main-calendar .fc-theme-standard .fc-scrollgrid {
+    border: none;
+}
+.main-calendar .fc-theme-standard td,
+.fc-theme-standard th {
+    border: none;
+    border-right: 1px solid var(--bd-cal);
+    border-bottom: 1px solid var(--bd-cal);
+}
+.main-calendar .fc-theme-standard th:last-child {
+    border-right: none;
+}
+.main-calendar .fc-theme-standard td:last-child {
+    border-right: none;
+}
+.main-calendar .fc .fc-scrollgrid-section-liquid > td {
+    border-bottom: none;
+}
+.main-calendar .fc .fc-daygrid-body table tbody tr:last-child td {
+    border-bottom: none;
+}
+.main-calendar .fc .fc-daygrid-body table tbody {
+    border-bottom: none;
+}
+.main-calendar .fc .fc-view-harness-active > .fc-view {
+    background-color: var(--bg-box);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.main-calendar .fc .fc-view-harness-active > .fc-view * {
+    color: var(--text-0);
+}
+
+.fc .fc-daygrid-day-frame:hover {
+    background-color: var(--cal-select);
+    cursor: pointer;
+}
+.main-calendar .fc-toolbar-title {
+    color: var(--text-0);
+}
+.main-calendar .fc .fc-button {
+    border-radius: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+    .main-calendar .fc-toolbar-title {
+        font-size: 1.3em;
+        margin-left: 0px !important;
+        margin-top: 10px ;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .main-calendar .fc-toolbar-title {
+        font-size: 1.1em;
+        
+    }
+}

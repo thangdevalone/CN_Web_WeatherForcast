@@ -33,6 +33,7 @@ export function NavBar() {
                 top: '50%',
                 padding: 0,
                 zIndex: 7,
+                borderRadius: '15px',
                 transform: 'translate(-50px,-50%)',
                 transition: 'all 0.3s',
                 '&:hover': {

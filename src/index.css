@@ -52,7 +52,8 @@ body.light {
     --bg-sun-box:#fffde7;
     --bd-sun-box:#ffb300;
     --pl-holder:#82848A;
-
+    --bd-cal: #ccc;
+    --cal-select:#ccc;
     --text-df:#000000;
 
 }
@@ -75,6 +76,8 @@ body.dark {
     --bg-sun-box:#2d2a54;
     --bd-sun-box:transparent;
     --pl-holder:#fdfdfd;
+    --bd-cal: #999;
+    --cal-select:#ccc;
     --text-df:#ffffff;
 
 }
