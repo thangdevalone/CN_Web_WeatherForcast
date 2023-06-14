@@ -5,6 +5,7 @@ import { useState, ChangeEvent, KeyboardEvent } from 'react';
 
 export interface InputSeachLocationProps {
     handleValue: (value: string) => void;
+    width?:string
 }
 
 export const CustomInputBase = styled(InputBase)`
@@ -17,7 +18,7 @@ export const CustomInputBase = styled(InputBase)`
     }
 `;
 export function InputSeachLocation(props: InputSeachLocationProps) {
-    const { handleValue } = props;
+    const { handleValue,width="60%" } = props;
     const [value, setValue] = useState<string>('');
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
@@ -39,7 +40,7 @@ export function InputSeachLocation(props: InputSeachLocationProps) {
                 display: 'flex',
                 height: '35px',
                 alignItems: 'center',
-                width: '60%',
+                width: `${width}`,
                 background: 'var(--bg-search)',
                 borderRadius: '12px',
             }}

@@ -1,7 +1,7 @@
 import { Avatar, Box, IconButton, Stack, styled } from '@mui/material';
 
 import classes from './styles.module.css';
-import { InputSeachLocation } from './InputSearchLocation';
+import { InputSeachLocation } from '../../../utils/InputSearchLocation';
 
 import { CurrentCard } from './CurrentCard';
 import { CardWeather, InforStorage } from '@/models';

@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
         <ThemeProvider theme={theme}>
             <SnackbarProvider
-                autoHideDuration={3000}
+                autoHideDuration={3500}
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
                 <App />

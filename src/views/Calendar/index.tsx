@@ -1,5 +1,6 @@
 import { InputField } from '@/components/FormControls';
 import { AreaField } from '@/components/FormControls/AreaField';
+import { calculateDateDifference } from '@/constants';
 import useWindowDimensions from '@/hooks/WindowDimensions';
 import { NoteForm } from '@/models';
 import { INITIAL_EVENTS, createEventId } from '@/utils/Event';
@@ -10,7 +11,7 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Box,
+    Box,
     Button,
     Dialog,
     DialogActions,
@@ -23,6 +24,7 @@ import {
     Typography,
 } from '@mui/material';
 import dayjs from 'dayjs';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -30,7 +32,6 @@ import * as yup from 'yup';
 import { AlertWeather } from './AlertWeather';
 import './replace.css';
 import styles from './styles.module.css';
-import { useSnackbar } from 'notistack';
 interface AppState {
     weekendsVisible: boolean;
     currentEvents: EventApi[];
@@ -46,7 +47,6 @@ export function Calendar() {
         status: false,
     });
     const [open2, setOpen2] = useState(false);
-    const [dateClick, setDateClick] = useState<Date | string>(new Date());
     const [dateSelect, setDateSelect] = useState<DateSelectArg | null>(null);
     const { width } = useWindowDimensions();
     const { enqueueSnackbar } = useSnackbar();
@@ -79,12 +79,15 @@ export function Calendar() {
     };
     function renderEventContent(eventContent: EventContentArg) {
         return (
-            <Box sx={{"& *":{
-              fontFamily:'"Roboto",sans-serif"',
-            }}}>
-                <Typography variant='body1'>{eventContent.event.title}</Typography>
-                <Typography variant='body2'>{eventContent.timeText}</Typography>
-         
+            <Box
+                sx={{
+                    '& *': {
+                        fontFamily: '"Roboto",sans-serif"',
+                    },
+                }}
+            >
+                <Typography variant="body1">{eventContent.event.title}</Typography>
+                <Typography variant="body2">{eventContent.timeText}</Typography>
             </Box>
         );
     }
@@ -103,7 +106,6 @@ export function Calendar() {
         };
     };
     const handleAddEvent = () => {
-        console.log('add');
         handleClose1();
         handleDateSelect(open1?.selectInfo);
     };
@@ -111,8 +113,18 @@ export function Calendar() {
         setOpen2(false);
     };
     const handleViewWeather = () => {
-        console.log('view');
+
+        if (!open1.selectInfo) return;
+        if (calculateDateDifference(open1.selectInfo.startStr, open1.selectInfo.endStr) !== 1) {
+            enqueueSnackbar('Không thể xem thời tiết nhiều ngày hãy chọn 1 ngày', {
+                variant: 'warning',
+            });
+        }
+        else{
+            setDateSelect(open1?.selectInfo);
+        }
         handleClose1();
+
     };
 
     const onSubmit: SubmitHandler<NoteForm> = (data: NoteForm) => {
@@ -127,7 +139,6 @@ export function Calendar() {
             });
             handleClose2();
             enqueueSnackbar('Thêm sự kiện thành công', { variant: 'success' });
-
         } catch (error) {
             console.log(error);
             enqueueSnackbar('Xảy ra lỗi hãy thử lại', { variant: 'error' });
@@ -139,9 +150,8 @@ export function Calendar() {
                 <DialogTitle>{'Bạn muốn gì?'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <b>Lưu ý: </b> Xem dữ liệu thời tiết chỉ có thể xem được thời tiết dự báo
-                        trước <b>300 ngày</b>, lịch sử <b>365 ngày</b> tính từ ngày hiện tại đối với
-                        api bản pro ( Xem chi tiết tại:{' '}
+                        <b>Lưu ý: </b> Xem dữ liệu thời tiết chỉ có thể xem được thời tiết tương lai 14 đến 300 ngày, lịch sử 365 ngày  tính từ ngày hiện tại đối với
+                        api bản pro <br/> ( Xem chi tiết tại:{' '}
                         <Link to="https://www.weatherapi.com/" target="_blank" title="Weather API">
                             WeatherAPI.com
                         </Link>{' '}
@@ -225,7 +235,6 @@ export function Calendar() {
                     dayMaxEvents={true}
                     allDayContent="All day"
                     nowIndicator={true}
-  
                     dayHeaderFormat={{ weekday: `${width > 1100 ? 'long' : 'short'}` }}
                     titleFormat={{
                         year: 'numeric',
@@ -248,7 +257,7 @@ export function Calendar() {
             */
                 />
             </div>
-            <AlertWeather dayForecast={dateClick} />
+            <AlertWeather dayForecast={dateSelect} />
         </Stack>
     );
 }

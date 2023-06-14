@@ -9,6 +9,5 @@ const forcastApi = {
         const url = `/forecast.json?key=${API_KEY}&q=${normLocation(locate)}&days=${days}&lang=vi&aqi=yes`
         return axiosClient.get(url)
     },
-   
 }
 export default forcastApi;
