@@ -57,7 +57,7 @@ export function NewUser() {
             console.log(data);
             const infor: InforStorage = { name: name, avatar: data.data.url,location:location };
             localStorage.setItem('weather_app_infor', JSON.stringify(infor));
-            localStorage.setItem('weather_app', JSON.stringify({mode:'light',astro:[{id:uuidv4(),location:location}]}));
+            localStorage.setItem('weather_app', JSON.stringify({mode:'light',astro:[{id:uuidv4(),location:location}],note:[]}));
 
             setLoading(false);
             navigator('/home', {replace:true})

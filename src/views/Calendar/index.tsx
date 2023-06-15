@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputField } from '@/components/FormControls';
 import { AreaField } from '@/components/FormControls/AreaField';
 import { calculateDateDifference } from '@/constants';
@@ -42,10 +43,12 @@ export function Calendar() {
         weekendsVisible: true,
         currentEvents: [],
     });
+
     const [open1, setOpen1] = useState<{ selectInfo: DateSelectArg | null; status: boolean }>({
         selectInfo: null,
         status: false,
     });
+    const [watch, setWatch] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [dateSelect, setDateSelect] = useState<DateSelectArg | null>(null);
     const { width } = useWindowDimensions();
@@ -69,6 +72,16 @@ export function Calendar() {
     const handleEventClick = (clickInfo: EventClickArg) => {
         if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
             clickInfo.event.remove();
+            const stored = localStorage.getItem('weather_app');
+            const note :Array<any>= stored && JSON.parse(stored)?.note ? JSON.parse(stored)?.note : [];
+            const newNote=note.filter((item:any)=>item?.id!==clickInfo.event.id)
+            if (!stored) {
+                throw new Error('Có lỗi');
+            }
+
+            
+            localStorage.setItem('weather_app',JSON.stringify({ ...JSON.parse(stored), note: newNote }));
+            enqueueSnackbar('Xóa thành công',{variant:"success"})
         }
     };
     const handleEvents = (events: EventApi[]) => {
@@ -79,16 +92,64 @@ export function Calendar() {
     };
     function renderEventContent(eventContent: EventContentArg) {
         return (
-            <Box
-                sx={{
-                    '& *': {
-                        fontFamily: '"Roboto",sans-serif"',
-                    },
-                }}
-            >
-                <Typography variant="body1">{eventContent.event.title}</Typography>
-                <Typography variant="body2">{eventContent.timeText}</Typography>
-            </Box>
+            <>
+                {eventContent.view.type !== 'dayGridMonth' ? (
+                    <Box
+                        sx={{
+                            padding: '3px 5px',
+                            '& *': {
+                                fontFamily: 'Roboto,sans-serif',
+                                color: 'white !important',
+                            },
+                        }}
+                    >
+                        <Typography variant="body1">{eventContent.event.title}</Typography>
+                        <Typography variant="body2">{eventContent.timeText}</Typography>
+
+                        {eventContent.event.extendedProps?.desc && (
+                            <Typography variant="body2">
+                                Mô tả: <i>{eventContent.event.extendedProps.desc}</i>
+                            </Typography>
+                        )}
+                    </Box>
+                ) : eventContent.event.allDay ? (
+                    <Box
+                        sx={{
+                            padding: '3px 5px',
+                            '& *': {
+                                fontFamily: 'Roboto,sans-serif',
+                                color: 'white !important',
+                            },
+                        }}
+                    >
+                        <Typography  noWrap={true} variant="body1">{eventContent.event.title}</Typography>
+                    </Box>
+                ) : (
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        sx={{
+                            overflow: 'hidden',
+                            width: '100%',
+                            borderRadius: '3px',
+                            p: '2px 7px',
+                            m: '1px 2px',
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                
+                                width: '10px',
+                                height: '10px',
+                                borderRadius: '50%',
+                                mr: '5px',
+                                backgroundColor: 'var(--fc-event-bg-color)',
+                            }}
+                        ></Box>
+                        <Typography sx={{width:"calc(100% - 15px)"}} noWrap={true} variant="body1">{eventContent.event.title}</Typography>
+                    </Stack>
+                )}
+            </>
         );
     }
 
@@ -106,6 +167,7 @@ export function Calendar() {
         };
     };
     const handleAddEvent = () => {
+        setWatch(false);
         handleClose1();
         handleDateSelect(open1?.selectInfo);
     };
@@ -113,18 +175,16 @@ export function Calendar() {
         setOpen2(false);
     };
     const handleViewWeather = () => {
-
+        setWatch(true);
         if (!open1.selectInfo) return;
         if (calculateDateDifference(open1.selectInfo.startStr, open1.selectInfo.endStr) !== 1) {
             enqueueSnackbar('Không thể xem thời tiết nhiều ngày hãy chọn 1 ngày', {
                 variant: 'warning',
             });
-        }
-        else{
+        } else {
             setDateSelect(open1?.selectInfo);
         }
         handleClose1();
-
     };
 
     const onSubmit: SubmitHandler<NoteForm> = (data: NoteForm) => {
@@ -133,10 +193,19 @@ export function Calendar() {
         calendarApi.unselect();
 
         try {
-            calendarApi.addEvent({
+            const e = {
                 id: createEventId(),
                 ...data,
-            });
+            };
+            calendarApi.addEvent(e);
+            const stored = localStorage.getItem('weather_app');
+            const note :Array<object>= stored && JSON.parse(stored)?.note ? JSON.parse(stored)?.note : [];
+            if (!stored) {
+                throw new Error('Có lỗi');
+            }
+
+            note.push(e);
+            localStorage.setItem('weather_app',JSON.stringify({ ...JSON.parse(stored), note: note }));
             handleClose2();
             enqueueSnackbar('Thêm sự kiện thành công', { variant: 'success' });
         } catch (error) {
@@ -144,14 +213,16 @@ export function Calendar() {
             enqueueSnackbar('Xảy ra lỗi hãy thử lại', { variant: 'error' });
         }
     };
+
     return (
         <Stack className="full-box" flexDirection="row">
             <Dialog maxWidth="sm" open={open1.status}>
                 <DialogTitle>{'Bạn muốn gì?'}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <b>Lưu ý: </b> Xem dữ liệu thời tiết chỉ có thể xem được thời tiết tương lai 14 đến 300 ngày, lịch sử 365 ngày  tính từ ngày hiện tại đối với
-                        api bản pro <br/> ( Xem chi tiết tại:{' '}
+                        <b>Lưu ý: </b> Xem dữ liệu thời tiết chỉ có thể xem được thời tiết tương lai
+                        14 đến 300 ngày, lịch sử 365 ngày tính từ ngày hiện tại đối với api bản pro{' '}
+                        <br /> ( Xem chi tiết tại:{' '}
                         <Link to="https://www.weatherapi.com/" target="_blank" title="Weather API">
                             WeatherAPI.com
                         </Link>{' '}
@@ -257,7 +328,7 @@ export function Calendar() {
             */
                 />
             </div>
-            <AlertWeather dayForecast={dateSelect} />
+            <AlertWeather watch={watch} dayForecast={dateSelect} />
         </Stack>
     );
 }

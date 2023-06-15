@@ -46,7 +46,7 @@ export function NavBar() {
                     width: '30px',
                     height: '30px',
                     top: '-30px',
-                    transition:'all 0.25s',
+                    transition: 'all 0.25s',
                     left: '0px',
                     borderRadius: '50%',
                     backgroundColor: 'transparent',
@@ -61,7 +61,7 @@ export function NavBar() {
                     content: '""',
                     position: 'absolute',
                     width: '30px',
-                    transition:'all 0.25s',
+                    transition: 'all 0.25s',
 
                     height: '30px',
                     bottom: '-30px',
@@ -89,8 +89,6 @@ export function NavBar() {
                 }}
             >
                 <ListItemButtonCustom
-       
-                
                     className={classes.boxIconNav}
                     onClick={() => handleNav('/home')}
                     selected={navActive === '/home'}

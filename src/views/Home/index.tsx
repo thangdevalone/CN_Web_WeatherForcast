@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Stack } from '@mui/material';
+import { Drawer, IconButton, Stack } from '@mui/material';
 
+import forcastApi from '@/api/forcastApi';
+import useWindowDimensions from '@/hooks/WindowDimensions';
+import { CardWeather, InforStorage } from '@/models';
+import { WbSunnyOutlined } from '@mui/icons-material';
+import { blue } from '@mui/material/colors';
+import { useEffect, useState } from 'react';
 import { ForcastMain } from './components/ForcastMain';
 import { SideBar } from './components/SideBar';
-import { useEffect, useState } from 'react';
-import forcastApi from '@/api/forcastApi';
-import { CardWeather, InforStorage } from '@/models';
 
 export interface HomeProps {
     setMode: (newMode: string) => void;
@@ -17,6 +20,13 @@ export function Home({ setMode }: HomeProps) {
     const [currentCard, setCurrentCard] = useState<CardWeather | null>(null);
     const [foreCastDay, setForecastDay] = useState<any>(null);
     const [activeCard, setActiveCard] = useState<number>(0);
+    const [anchor, setAnchor] = useState(false);
+    const handleClose = () => {
+        setAnchor(false);
+    };
+    const handleOpen = () => {
+        setAnchor(true);
+    };
     useEffect(() => {
         (async () => {
             try {
@@ -37,12 +47,15 @@ export function Home({ setMode }: HomeProps) {
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parsed.location]);
-
+    const { width } = useWindowDimensions();
     return (
-        <Box>
+        <>
             {currentCard && (
                 <>
-                    <Stack className="full-box" flexDirection="row">
+                    <Stack
+                        className="full-box"
+                        flexDirection="row"
+                    >
                         <ForcastMain
                             setMode={setMode}
                             forecast={foreCastDay}
@@ -50,10 +63,44 @@ export function Home({ setMode }: HomeProps) {
                             setActiveCard={setActiveCard}
                             setCurrentCard={setCurrentCard}
                         />
-                        <SideBar currentCard={currentCard} setValue={setParsed} />
+                        {width > 700 ? (
+                            <SideBar currentCard={currentCard} setValue={setParsed} />
+                        ) : (
+                            <>
+                                <Drawer open={anchor} anchor="right" onClose={handleClose}>
+                                    <SideBar
+                                        handleClose={handleClose}
+                                        currentCard={currentCard}
+                                        setValue={setParsed}
+                                    />
+                                </Drawer>
+                                <IconButton
+                                    aria-label="open drawer"
+                                    onClick={handleOpen}
+                                    sx={{
+                                        position: 'absolute',
+                                        bottom: `${width > 550 ? '40px' : '80px'}`,
+                                        right: `${width > 550 && '30px'}`,
+                                        left: `${width < 550 && '10px'}`,
+                                        width: '60px',
+                                        height: '60px',
+                                        borderRadius: '100%',
+                                        '&:hover': {
+                                            backgroundColor: blue['A100'],
+                                        },
+                                        backgroundColor: blue['A100'],
+
+                                        boxShadow:
+                                            'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
+                                    }}
+                                >
+                                    <WbSunnyOutlined htmlColor="white" />
+                                </IconButton>
+                            </>
+                        )}
                     </Stack>
                 </>
             )}
-        </Box>
+        </>
     );
 }

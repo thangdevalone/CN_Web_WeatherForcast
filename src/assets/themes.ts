@@ -20,9 +20,8 @@ declare module '@mui/material/styles' {
 }
 import { createTheme } from '@mui/material/styles';
 
-export const theme = createTheme({
+export const initTheme = createTheme({
     palette: {
-        
         lightBlue: {
             main: '#A3C2FF',
         },
@@ -39,3 +38,24 @@ export const theme = createTheme({
             : 'light',
     },
 });
+
+
+export const updateThemeMode = (mode:"dark"|"light") => {
+    const updatedTheme = createTheme({
+      ...initTheme,
+      palette: {
+        lightBlue: {
+            main: '#A3C2FF',
+        },
+        csBlue: {
+            main: '#6291F8',
+        },
+        csWhite: {
+            main: '#fff',
+        },
+
+        mode: mode,
+      },
+    });
+    return updatedTheme;
+  };

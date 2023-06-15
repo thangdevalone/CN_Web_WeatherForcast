@@ -7,7 +7,11 @@
 
 #alertWeather{
     flex: 1;
-    max-width: 350px;
+    height: 100vh;
+    overflow: hidden auto;
+    max-width: 400px;
+    box-sizing: border-box;
     padding:15px 40px;
     min-width: 300px;
+    background-color: var(--bg-side-bar);
 }

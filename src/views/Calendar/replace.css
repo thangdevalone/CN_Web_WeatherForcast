@@ -36,7 +36,6 @@
 }
 
 .fc .fc-daygrid-day-frame:hover {
-    background-color: var(--cal-select);
     cursor: pointer;
 }
 .main-calendar .fc-toolbar-title {
@@ -45,7 +44,45 @@
 .main-calendar .fc .fc-button {
     border-radius: 15px;
 }
+.fc .fc-button-primary{
+    background-color: var(--bg-cal-btn);
+}
+.fc-v-event{
+    box-shadow: 
+  0 0 0 1px var(--fc-page-bg-color),
+   rgba(0, 0, 0, 0.24) 0px 3px 8px,
+  rgba(0, 0, 0, 0.24) 0px 3px 8px,
+  rgba(0, 0, 0, 0.24) 0px 3px 8px!important;
 
+}
+.fc-v-event .fc-event-main{
+    overflow: hidden auto;
+}
+.fc-v-event .fc-event-main:hover{
+    background-color: var(--fc-event-bg-color);
+
+}
+.fc-daygrid-event{
+    background-color: var(--fc-event-bg-color);
+}
+.fc .fc-daygrid-event-harness{
+    z-index: 4;
+
+}
+.fc-daygrid-event.fc-daygrid-dot-event{
+    background-color: transparent;
+    border-radius: 8px !important;
+
+}
+.fc-daygrid-event.fc-daygrid-dot-event:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.fc-theme-standard .fc-popover-header{
+    background-color: var(--cal-pop-h);
+}
+.fc-theme-standard .fc-popover{
+    background-color: var(--bg-side-bar);
+}
 @media screen and (max-width: 1000px) {
     .main-calendar .fc-toolbar-title {
         font-size: 1.3em;

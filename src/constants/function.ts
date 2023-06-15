@@ -103,3 +103,24 @@ export function calculateDateDifference(startDate: string, endDate: string): num
 
     return daysDifference;
 }
+
+export function convertMoonPhase(phase: string): string {
+    const mappingTable: { [key: string]: string } = {
+      "New Moon": "Trăng non",
+      "Waxing Crescent": "Trăng lưỡi liềm đầu tháng",
+      "First Quarter": "Trăng bán nguyệt đầu tháng",
+      "Waxing Gibbous": "Trăng khuyết đầu tháng ",
+      "Full Moon": "Trăng tròn",
+      "Waning Gibbous": "Trăng khuyết cuối tháng",
+      "Last Quarter": "Trăng bán nguyệt cuối tháng",
+      "Waning Crescent": "Trăng tàn"
+    };
+  
+    return mappingTable[phase] || "Không xác định";
+  }
+
+export function getApp(){
+    const localStorageItem = localStorage.getItem('weather_app');
+    const app= localStorageItem ? JSON.parse(localStorageItem) : null;
+    return app
+}

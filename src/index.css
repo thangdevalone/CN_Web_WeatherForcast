@@ -28,6 +28,7 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 h1 {
@@ -55,6 +56,10 @@ body.light {
     --bd-cal: #ccc;
     --cal-select:#ccc;
     --text-df:#000000;
+    --bg-cal-btn:#2C3E50;
+    --cal-pop-h:hsla(0,0%,82%,.3);
+    --bx-sd:rgba(0,0,0,0.45);
+    --nav-active:#f0f0f0;
 
 }
 body.dark {
@@ -77,8 +82,11 @@ body.dark {
     --bd-sun-box:transparent;
     --pl-holder:#fdfdfd;
     --bd-cal: #999;
-    --cal-select:#ccc;
+    --cal-select:#558cb9;
     --text-df:#ffffff;
-
+    --bg-cal-btn:#3b3a6f;
+    --cal-pop-h:#2d2a54;
+    --bx-sd:rgba(255,255,255,0.45);
+    --nav-active:#2d2a54;
 }
 

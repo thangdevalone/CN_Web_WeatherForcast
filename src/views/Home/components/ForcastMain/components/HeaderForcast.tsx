@@ -1,5 +1,6 @@
 
 import { MoonIcon, SunCloudIcon, SunIcon } from '@/assets/Icons';
+import useWindowDimensions from '@/hooks/WindowDimensions';
 import { InforStorage } from '@/models';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
@@ -11,7 +12,7 @@ export function HeaderForcast() {
     const user: InforStorage = localStorageItem ? JSON.parse(localStorageItem) : null;
     const theme = useTheme();
     const [currentTime, setCurrentTime] = useState(dayjs());
-
+    const {width}=useWindowDimensions()
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentTime(dayjs());
@@ -57,7 +58,7 @@ export function HeaderForcast() {
                         variant="h3"
                         sx={{
                             fontWeight: '500',
-                            fontSize: '1.5rem',
+                            fontSize: `${width>550?"1.5rem":"1.2rem"}`,
                             marginLeft: '10px',
                             color: 'var(--text-1)',
                         }}

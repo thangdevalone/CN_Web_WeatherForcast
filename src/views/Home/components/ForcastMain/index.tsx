@@ -8,12 +8,14 @@ import { CardWeather } from '@/models';
 import { AirQualityIndex } from './components/AirQualityIndex';
 import { AstroIndex } from './components/AstroIndex';
 import { SwitchLightDark } from '@/utils/SwitchLightDark';
+import classNames from 'classnames';
+import useWindowDimensions from '@/hooks/WindowDimensions';
 export interface ForcastMainProps {
     forecast: any;
     setCurrentCard: (forecast: CardWeather) => void;
     active: number;
     setActiveCard: (newCard: number) => void;
-    setMode:(newMode:string)=>void;
+    setMode: (newMode: string) => void;
 }
 
 interface ForecastBoxDay {
@@ -26,15 +28,21 @@ interface ForecastBoxDay {
 }
 
 export function ForcastMain(props: ForcastMainProps) {
-    const { forecast, setCurrentCard, active, setActiveCard,setMode } = props;
-
+    const { forecast, setCurrentCard, active, setActiveCard, setMode } = props;
+    const {width}=useWindowDimensions()
     return (
-        <Box className={classes.forcastMain}>
-            <Box sx={{ position: 'absolute', top: '30px', right: '40px',zIndex:10 }}>
-                <SwitchLightDark setMode={setMode}/>
+        
+        <Box sx={{ mb: `${width < 550 ? '60px' : '0px'}` }} className={classNames({ boxScrollY: true, [classes.forcastMain]: true })}>
+            <Box sx={{ position: 'absolute', top: '30px', right: '40px', zIndex: 10 }}>
+                <SwitchLightDark setMode={setMode} />
             </Box>
             <HeaderForcast />
-            <Stack sx={{ width: '100%', mt: '20px' }} direction="row" spacing={2}>
+            <Stack
+                className="boxScrollX"
+                sx={{ width: '100%', mt: '20px', overflow: 'auto hidden', p: '5px  5px 10px 5px' }}
+                direction="row"
+                spacing={2}
+            >
                 {forecast.map((item: ForecastBoxDay, index: number) => {
                     return (
                         <BoxForcastItem
@@ -54,11 +62,11 @@ export function ForcastMain(props: ForcastMainProps) {
                     );
                 })}
             </Stack>
-            <Stack direction="row" spacing={2} sx={{mt:"20px"}}>
-                <Stack direction="column" sx={{width:"50%"}}>
-                    <AirQualityIndex  airQualityData={forecast[active].day.air_quality} />
+            <Stack direction={`${width>1200?"row":"column"}`} alignItems={"center"} spacing={2} sx={{ mt: '20px' }}>
+                <Stack direction="column" sx={{ width: `${width>1200?"50%":"100%"}`, maxWidth:"550px" }}>
+                    <AirQualityIndex airQualityData={forecast[active].day.air_quality} />
                 </Stack>
-                <AstroIndex/>
+                <AstroIndex width={`${width>1200?"50%":"100%"}`} />
             </Stack>
         </Box>
     );

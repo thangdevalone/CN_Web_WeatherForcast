@@ -5,6 +5,7 @@ import { Box, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography, useTh
 import { amber } from '@mui/material/colors';
 import { ReactNode, useState } from 'react';
 import { astroLocal } from '../AstroIndex';
+import useWindowDimensions from '@/hooks/WindowDimensions';
 
 interface SunAlertProps {
     icon: ReactNode;
@@ -13,9 +14,11 @@ interface SunAlertProps {
 }
 
 function SunAlert(props: SunAlertProps) {
+    const {width}=useWindowDimensions()
+
     const { icon, text, time } = props;
     return (
-        <Stack direction="row" alignItems="center">
+        <Stack sx={{mt:`${width>750?"0px":"10px"}`}} direction="row" alignItems="center">
             {icon}
             <Stack sx={{ ml: '10px' }} direction="column">
                 <Typography sx={{ mb: '0px', color: 'var(--text-drop)' }}>{text}</Typography>
@@ -44,6 +47,7 @@ export function SunBox(props: SunBoxProps) {
         setAnchorEl(event.currentTarget);
         console.log(event.currentTarget);
     };
+    const {width}=useWindowDimensions()
     const handleCloseMore = () => {
         setAnchorEl(null);
     };
@@ -104,7 +108,7 @@ export function SunBox(props: SunBoxProps) {
                     </MenuItem>
                 </Menu>
             </Stack>
-            <Stack direction="row" alignItems="center" justifyContent="space-around">
+            <Stack direction={`${width>750?"row":"column"}`}  alignItems={`${width>750?"center":"flex-start"}`} justifyContent="space-around">
                 <SunAlert
                     icon={<SunIcon sx={{ fontSize: '50px' }} color={amber[500]} />}
                     text="Sunrise"

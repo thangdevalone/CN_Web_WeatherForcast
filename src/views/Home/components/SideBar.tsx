@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, Stack, styled } from '@mui/material';
+import { Avatar, Box, IconButton, Stack, styled, useTheme } from '@mui/material';
 
 import classes from './styles.module.css';
 import { InputSeachLocation } from '../../../utils/InputSearchLocation';
@@ -10,6 +10,8 @@ import { useSnackbar } from 'notistack';
 import forcastApi from '@/api/forcastApi';
 import { CircularIndeterminate } from '@/utils/CircularIndeterminate';
 import { useState } from 'react';
+import useWindowDimensions from '@/hooks/WindowDimensions';
+import { ArrowBack } from '@mui/icons-material';
 const CustomAvatarBase = styled(Avatar)`
     & {
         border-radius: 12px;
@@ -28,14 +30,17 @@ const CustomAvatarBase = styled(Avatar)`
 
 export interface SideBarProps {
     currentCard: CardWeather;
+    handleClose?:()=>void
     setValue: (newValue: InforStorage) => void;
 }
 export function SideBar(props: SideBarProps) {
-    const { currentCard, setValue } = props;
+    const { currentCard, setValue,handleClose=()=>{return;} } = props;
     const localStorageItem = localStorage.getItem('weather_app_infor');
     const user: InforStorage = localStorageItem ? JSON.parse(localStorageItem) : null;
     const { enqueueSnackbar } = useSnackbar();
     const [loadding, setLoading] = useState(false);
+    const { width } = useWindowDimensions();
+    const theme=useTheme()
     const handleValue = async (value: string) => {
         try {
             setLoading(true);
@@ -63,19 +68,34 @@ export function SideBar(props: SideBarProps) {
                 justifyContent="space-between"
                 sx={{ width: '100%', height: '70px', mt: '0px', mb: '15px' }}
             >
-                <InputSeachLocation handleValue={handleValue} />
-                <Stack flexDirection="row" alignItems="center">
-                    <IconButton
-                        sx={{
-                            '&:focus': {
-                                outline: 'none',
-                            },
-                        }}
-                    >
-                        <NotiIcon color="lightBlue" />
-                    </IconButton>
-                    <CustomAvatarBase src={user.avatar} />
-                </Stack>
+                {width > 550 ? (
+                    <>
+                        <InputSeachLocation handleValue={handleValue} />
+
+                        <Stack flexDirection="row" alignItems="center">
+                            <IconButton
+                                sx={{
+                                    '&:focus': {
+                                        outline: 'none',
+                                    },
+                                }}
+                            >
+                                <NotiIcon color="lightBlue" />
+                            </IconButton>
+                            <CustomAvatarBase src={user.avatar} />
+                        </Stack>
+                    </>
+                ) : (
+                    <>
+                        <IconButton
+                            aria-label="close drawer"
+                            onClick={handleClose}
+                        >
+                            <ArrowBack htmlColor={`${theme.palette.mode==="dark"?"white":"black"}`} />
+                        </IconButton>
+                        <InputSeachLocation width='80%' handleValue={handleValue} />
+                    </>
+                )}
             </Stack>
             <CurrentCard currentCard={currentCard} />
         </Box>

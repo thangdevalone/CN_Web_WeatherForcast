@@ -40,7 +40,11 @@ export interface astroLocal{
 interface formAddLocation {
     location: string;
 }
-export function AstroIndex() {
+export interface AstroIndexProps{
+    width:string
+}
+export function AstroIndex(props:AstroIndexProps) {
+    const {width}=props
     const stored = localStorage.getItem('weather_app');
     const parsed = stored ? JSON.parse(stored) : null;
     const [astro, setAstro] = useState<astroLocal[]>([...parsed.astro]);
@@ -123,10 +127,10 @@ export function AstroIndex() {
             </Dialog>
             <Box
                 className={classes.boxLayOut}
-                sx={{ width: '50%', boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px' ,backgroundColor:"var(--bg-box)"}}
+                sx={{ width: `${width}`, maxWidth:"550px", boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px' ,backgroundColor:"var(--bg-box)"}}
             >
                 <Stack
-                    sx={{ mb: '10px' }}
+                    sx={{ mb: '10px', }}
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"

@@ -20,7 +20,8 @@ export function BoxForcastItem(props: BoxForcastItemProps){
                 backgroundColor: `${active ? 'var(--bg-ele-blue)' : 'var(--bg-box)'}`,
                 borderRadius:"20px",
                 boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
-                cursor:"pointer"
+                cursor:"pointer",
+                minWidth:"100px"
             }}
             flexDirection="column"
             justifyContent="space-between"

@@ -111,7 +111,7 @@ export function AirQualityIndex(props: AirQualityIndexProps) {
                         </Stack>
                     </Stack>
                     <Box
-                        className={classes.boxScrollX}
+                        className='boxScrollX'
                         sx={{ width: '100%', overflow: 'auto hidden', pb: '10px' }}
                     >
                         <Stack
