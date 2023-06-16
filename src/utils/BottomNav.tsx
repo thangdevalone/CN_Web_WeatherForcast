@@ -30,7 +30,7 @@ export function BottomNav() {
                 boxShadow: '1px -1px 20px -6px var(--bx-sd)',
                 width: '100vw',
                 height: '60px',
-                position: 'absolute',
+                position: 'fixed',
                 bottom: 0,
                 zIndex:10,
                 left: 0,
