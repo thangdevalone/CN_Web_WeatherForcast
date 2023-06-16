@@ -32,8 +32,9 @@ export function ForcastMain(props: ForcastMainProps) {
     const {width}=useWindowDimensions()
     return (
         
-        <Box sx={{ mb: `${width < 550 ? '60px' : '0px'}` }} className={classNames({ boxScrollY: true, [classes.forcastMain]: true })}>
-            <Box sx={{ position: 'absolute', top: '30px', right: '40px', zIndex: 10 }}>
+ 
+    <Box sx={{ mb: `${width < 550 ? '60px' : '0px'}`, p:`${width > 550 ? '30px 40px' :  '20px 30px'}` }} className={classNames({ boxScrollY: true, [classes.forcastMain]: true })}>
+            <Box sx={{ position: 'absolute', top: `${width > 550 ? '30px ' :  '20px'}`, right: `${width > 550 ? '40px ' :  '10px'}`, zIndex: 10 }}>
                 <SwitchLightDark setMode={setMode} />
             </Box>
             <HeaderForcast />
