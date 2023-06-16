@@ -3,6 +3,7 @@ import classes from './style.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarIcon, ChartIcon, DashBoardIcon, LocationIcon, SettingIcon } from '../assets/Icons';
 import { useState, useEffect } from 'react';
+import useWindowDimensions from '@/hooks/WindowDimensions';
 
 const ListItemButtonCustom = styled(ListItemButton)(() => ({
     '&.Mui-selected': {
@@ -26,6 +27,7 @@ export function NavBar() {
             navigate(nav);
         }
     };
+    const {width}=useWindowDimensions()
     return (
         <List
             sx={{
@@ -34,10 +36,10 @@ export function NavBar() {
                 padding: 0,
                 zIndex: 7,
                 borderRadius: '15px',
-                transform: 'translate(-50px,-50%)',
+                transform: `${width>1000 ?"translate(-50px,-50%)":"translate(0px,-50%)"}`,
                 transition: 'all 0.3s',
                 '&:hover': {
-                    transform: 'translate(0px,-50%)',
+                    transform: `${width>700 ?"translate(0px,-50%)":"unset"}`,
                 },
                 '&::before': {
                     display: 'block',

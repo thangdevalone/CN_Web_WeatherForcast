@@ -17,8 +17,8 @@ import { InforStorage } from '@/models';
 import { CircularIndeterminate } from '@/utils/CircularIndeterminate';
 import { InputSeachLocation } from '@/utils/InputSearchLocation';
 import { DateSelectArg } from '@fullcalendar/core/index.js';
-import { ArrowForwardIosSharp } from '@mui/icons-material';
-import { Box, Stack, Tooltip, Typography, styled } from '@mui/material';
+import { ArrowBack, ArrowForwardIosSharp } from '@mui/icons-material';
+import { Box, IconButton, Stack, Tooltip, Typography, styled, useTheme } from '@mui/material';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
@@ -26,9 +26,11 @@ import dayjs from 'dayjs';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
+import useWindowDimensions from '@/hooks/WindowDimensions';
 export interface AlertWeatherProps {
     dayForecast: DateSelectArg | null;
     watch: boolean;
+    handleClose?: () => void;
 }
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -149,7 +151,7 @@ function astroTsx(weather: any) {
 }
 
 export function AlertWeather(props: AlertWeatherProps) {
-    const { dayForecast, watch } = props;
+    const { dayForecast, watch, handleClose=()=>{return;} } = props;
     const app = getApp();
     const stored = localStorage.getItem('weather_app_infor');
     const parsed = stored ? JSON.parse(stored) : null;
@@ -213,12 +215,26 @@ export function AlertWeather(props: AlertWeatherProps) {
             enqueueSnackbar('Vị trí muốn tìm ko hợp lệ hoặc không có sẵn', { variant: 'error' });
         }
     };
+    const { width } = useWindowDimensions();
+    const theme = useTheme();
     return (
         <Box id={styles.alertWeather}>
             {loadding && <CircularIndeterminate />}
-            <Stack justifyContent="center" sx={{ height: '70px' }}>
-                <InputSeachLocation handleValue={handleValue} width="100%" />
+            <Stack alignItems='center' justifyContent='space-between' direction='row' sx={{ height: '70px' }}>
+                {width > 550 ? (
+                    <InputSeachLocation handleValue={handleValue} width="100%" />
+                ) : (
+                    <>
+                        <IconButton aria-label="close drawer" onClick={handleClose}>
+                            <ArrowBack
+                                htmlColor={`${theme.palette.mode === 'dark' ? 'white' : 'black'}`}
+                            />
+                        </IconButton>
+                        <InputSeachLocation width="80%" handleValue={handleValue} />
+                    </>
+                )}
             </Stack>
+
             {weather ? (
                 <>
                     <Accordion expanded={expanded[0]} onChange={handleChange(0)}>

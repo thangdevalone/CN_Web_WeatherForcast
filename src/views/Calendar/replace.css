@@ -96,4 +96,19 @@
         font-size: 1.1em;
         
     }
+    .fc .fc-toolbar{
+        align-items: flex-start;
+    }
+    
+}
+@media screen and (max-width: 400px) {
+    .fc-today-button{
+        margin-top: 10px !important;
+    }
+    .main-calendar .fc-toolbar-title {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    
 }

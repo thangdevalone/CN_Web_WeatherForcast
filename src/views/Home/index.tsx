@@ -9,6 +9,7 @@ import { blue } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import { ForcastMain } from './components/ForcastMain';
 import { SideBar } from './components/SideBar';
+import { RingLoader } from 'react-spinners';
 
 export interface HomeProps {
     setMode: (newMode: string) => void;
@@ -19,6 +20,7 @@ export function Home({ setMode }: HomeProps) {
     const [parsed, setParsed] = useState<InforStorage>(stored && JSON.parse(stored));
     const [currentCard, setCurrentCard] = useState<CardWeather | null>(null);
     const [foreCastDay, setForecastDay] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
     const [activeCard, setActiveCard] = useState<number>(0);
     const [anchor, setAnchor] = useState(false);
     const handleClose = () => {
@@ -27,6 +29,11 @@ export function Home({ setMode }: HomeProps) {
     const handleOpen = () => {
         setAnchor(true);
     };
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        },2000  )
+    },[])
     useEffect(() => {
         (async () => {
             try {
@@ -50,55 +57,58 @@ export function Home({ setMode }: HomeProps) {
     const { width } = useWindowDimensions();
     return (
         <>
-            {currentCard && (
+            {loading ? (
+                <Stack className="full-box" alignItems="center" justifyContent="center"><RingLoader color="#83acff" /></Stack>
+            ) : (
                 <>
-                    <Stack
-                        className="full-box"
-                        flexDirection="row"
-                    >
-                        <ForcastMain
-                            setMode={setMode}
-                            forecast={foreCastDay}
-                            active={activeCard}
-                            setActiveCard={setActiveCard}
-                            setCurrentCard={setCurrentCard}
-                        />
-                        {width > 700 ? (
-                            <SideBar currentCard={currentCard} setValue={setParsed} />
-                        ) : (
-                            <>
-                                <Drawer open={anchor} anchor="right" onClose={handleClose}>
-                                    <SideBar
-                                        handleClose={handleClose}
-                                        currentCard={currentCard}
-                                        setValue={setParsed}
-                                    />
-                                </Drawer>
-                                <IconButton
-                                    aria-label="open drawer"
-                                    onClick={handleOpen}
-                                    sx={{
-                                        position: 'absolute',
-                                        bottom: `${width > 550 ? '40px' : '80px'}`,
-                                        right: `${width > 550 && '30px'}`,
-                                        left: `${width < 550 && '10px'}`,
-                                        width: '60px',
-                                        height: '60px',
-                                        borderRadius: '100%',
-                                        '&:hover': {
-                                            backgroundColor: blue['A100'],
-                                        },
-                                        backgroundColor: blue['A100'],
+                    {currentCard && (
+                        <>
+                            <Stack className="full-box" flexDirection="row">
+                                <ForcastMain
+                                    setMode={setMode}
+                                    forecast={foreCastDay}
+                                    active={activeCard}
+                                    setActiveCard={setActiveCard}
+                                    setCurrentCard={setCurrentCard}
+                                />
+                                {width > 700 ? (
+                                    <SideBar currentCard={currentCard} setValue={setParsed} />
+                                ) : (
+                                    <>
+                                        <Drawer open={anchor} anchor="right" onClose={handleClose}>
+                                            <SideBar
+                                                handleClose={handleClose}
+                                                currentCard={currentCard}
+                                                setValue={setParsed}
+                                            />
+                                        </Drawer>
+                                        <IconButton
+                                            aria-label="open drawer"
+                                            onClick={handleOpen}
+                                            sx={{
+                                                position: 'absolute',
+                                                bottom: `${width > 550 ? '40px' : '80px'}`,
+                                                right: `${width > 550 ? '30px' : 'unset'}`,
+                                                left: `${width < 550 && '10px'}`,
+                                                width: '60px',
+                                                height: '60px',
+                                                borderRadius: '100%',
+                                                '&:hover': {
+                                                    backgroundColor: blue['A100'],
+                                                },
+                                                backgroundColor: blue['A100'],
 
-                                        boxShadow:
-                                            'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
-                                    }}
-                                >
-                                    <WbSunnyOutlined htmlColor="white" />
-                                </IconButton>
-                            </>
-                        )}
-                    </Stack>
+                                                boxShadow:
+                                                    'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px',
+                                            }}
+                                        >
+                                            <WbSunnyOutlined htmlColor="white" />
+                                        </IconButton>
+                                    </>
+                                )}
+                            </Stack>
+                        </>
+                    )}
                 </>
             )}
         </>
