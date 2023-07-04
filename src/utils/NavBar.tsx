@@ -1,9 +1,9 @@
-import { Box, List, ListItemButton, styled } from '@mui/material';
-import classes from './style.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { CalendarIcon, ChartIcon, DashBoardIcon, LocationIcon, SettingIcon } from '../assets/Icons';
-import { useState, useEffect } from 'react';
 import useWindowDimensions from '@/hooks/WindowDimensions';
+import { Box, List, ListItemButton, styled } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { CalendarIcon, ChartIcon, DashBoardIcon, SettingIcon } from '../assets/Icons';
+import classes from './style.module.css';
 
 const ListItemButtonCustom = styled(ListItemButton)(() => ({
     '&.Mui-selected': {
@@ -36,7 +36,7 @@ export function NavBar() {
                 padding: 0,
                 zIndex: 7,
                 borderRadius: '15px',
-                transform: `${width>1000 ?"translate(-50px,-50%)":"translate(0px,-50%)"}`,
+                transform: `${width>1000 ?"translate(-45px,-50%)":"translate(0px,-50%)"}`,
                 transition: 'all 0.3s',
                 '&:hover': {
                     transform: `${width>700 ?"translate(0px,-50%)":"unset"}`,
@@ -77,7 +77,6 @@ export function NavBar() {
                     }`,
                 },
                 left: '0px',
-
                 boxShadow:
                     'rgba(0, 114, 228, 0.1) 0px -8px 24px, rgba(0, 114, 228, 0.1) 8px 0px 24px, rgba(0, 114, 228, 0.1) 0px 8px 24px',
             }}
@@ -97,13 +96,7 @@ export function NavBar() {
                 >
                     <DashBoardIcon color="white" />
                 </ListItemButtonCustom>
-                <ListItemButtonCustom
-                    className={classes.boxIconNav}
-                    onClick={() => handleNav('/location')}
-                    selected={navActive === '/location'}
-                >
-                    <LocationIcon color="white" />
-                </ListItemButtonCustom>
+
                 <ListItemButtonCustom
                     className={classes.boxIconNav}
                     onClick={() => handleNav('/calendar')}

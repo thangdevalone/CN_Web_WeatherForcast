@@ -1,13 +1,11 @@
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import './App.css';
-
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectAuth } from './components/ProtectAuth';
 import { ProtectRoute } from './components/ProtectRoute';
 import { Analysis } from './views/Analysis';
 import { Calendar } from './views/Calendar';
 import { Home } from './views/Home';
-import { Location } from './views/Location';
 import { NewUser } from './views/NewUser';
 import { Setting } from './views/Setting';
 import { useState, useEffect } from 'react';
@@ -37,7 +35,6 @@ function App() {
                     <Route path="/" element={<ProtectRoute />}>
                         <Route path="/" element={<Navigate to="/home" />} />
                         <Route path="/home" element={<Home setMode={setMode} />} />
-                        <Route path="/location" element={<Location />} />
                         <Route path="/calendar" element={<Calendar />} />
                         <Route path="/analysis" element={<Analysis />} />
                         <Route path="/setting" element={<Setting />} />

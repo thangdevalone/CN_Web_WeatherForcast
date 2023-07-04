@@ -156,6 +156,7 @@ export function AstroIndex(props:AstroIndexProps) {
                         </IconButton>
                     </Stack>
                 </Stack>
+                <Box className="boxScrollY" sx={{maxHeight:"220px",overflow:"hidden auto",pr:"5px"}}>
                 {astroData.length !== 0 && (
                     <>
                         {astroData.map((item, index) => {
@@ -172,6 +173,8 @@ export function AstroIndex(props:AstroIndexProps) {
                         })}
                     </>
                 )}
+                </Box>
+                
             </Box>
         </>
     );

@@ -27,7 +27,7 @@ export function CurrentCard(props: CurrentCardProps) {
                 padding: '10px',
                 boxSizing: 'border-box',
                 boxShadow:
-                    ' 0px -8px 16px rgba(0, 114, 228, 0.1), 8px 0px 16px rgba(0, 114, 228, 0.1),0px 8px 16px rgba(0, 114, 228, 0.1), -8px 0px 16px rgba(0, 114, 228, 0.1)',
+                    '0px -8px 16px rgba(0, 114, 228, 0.1), 8px 0px 16px rgba(0, 114, 228, 0.1),0px 8px 16px rgba(0, 114, 228, 0.1), -8px 0px 16px rgba(0, 114, 228, 0.1)',
             }}
         >
             <Stack

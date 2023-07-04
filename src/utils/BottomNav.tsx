@@ -2,8 +2,7 @@ import {
     AnalyticsOutlined,
     CalendarMonth,
     DashboardCustomizeOutlined,
-    LocationOnOutlined,
-    SettingsOutlined,
+    SettingsOutlined
 } from '@mui/icons-material';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
@@ -32,7 +31,7 @@ export function BottomNav() {
                 height: '60px',
                 position: 'fixed',
                 bottom: 0,
-                zIndex:10,
+                zIndex: 10,
                 left: 0,
             }}
             value={value}
@@ -48,16 +47,7 @@ export function BottomNav() {
                 value="/home"
                 icon={<DashboardCustomizeOutlined />}
             />
-            <BottomNavigationAction
-                sx={{
-                    minWidth: 'unset',
-                    '&.Mui-selected': {
-                        backgroundColor: 'var(--nav-active)',
-                    },
-                }}
-                value="/location"
-                icon={<LocationOnOutlined color="inherit" />}
-            />
+
             <BottomNavigationAction
                 sx={{
                     minWidth: 'unset',
