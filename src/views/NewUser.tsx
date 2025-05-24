@@ -12,7 +12,6 @@ import { InputField } from '../components/FormControls';
 import { UploadImageField } from '../components/FormControls/UploadImageField';
 import { InforForm, InforStorage } from '../models';
 import LinearIndeterminate from '../utils/LinearIndeterminate';
-import uploadApi from '../api/uploadApi';
 export function NewUser() {
     const imageUploadRef = useRef<HTMLInputElement>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
