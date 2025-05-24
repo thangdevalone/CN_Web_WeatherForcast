@@ -49,12 +49,11 @@ export function NewUser() {
         }
     };
     const onSubmit: SubmitHandler<InforForm> = async (data) => {
-        const { name, avatar,location } = data;
+        const { name,location } = data;
         try {
             setLoading(true);
-            const { data } = await uploadApi.postImg(avatar);
-            console.log(data);
-            const infor: InforStorage = { name: name, avatar: data.data.url,location:location };
+        
+            const infor: InforStorage = { name: name, avatar: "",location:location };
             localStorage.setItem('weather_app_infor', JSON.stringify(infor));
             localStorage.setItem('weather_app', JSON.stringify({mode:'light',astro:[{id:uuidv4(),location:location}],note:[]}));
 
