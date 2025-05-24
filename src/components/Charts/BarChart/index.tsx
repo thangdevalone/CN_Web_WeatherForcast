@@ -35,7 +35,7 @@ export function BarChart(props: BarChartProps) {
                   },
                 },
               },
-            } as Chart.ChartConfiguration;
+            } as any;
     
             new Chart(ctx, chartConfig);
           }
